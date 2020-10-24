@@ -59,7 +59,7 @@
       "Directus\\Custom\\Hooks\\": "public/extensions/custom/hooks/",
       "Directus\\Custom\\Hasher\\": "public/extensions/custom/hashers/",
 
-      "C14r\\": "src/c14r/"
+      "C14r\\Directus\\": "src/c14r/"
     },
     "files": [
       "src/helpers/all.php"

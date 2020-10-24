@@ -36,7 +36,7 @@ deploy.*
 /public/extensions/core/pages
 
 # Custom extensions
-/public/extensions/custom/*/*
+# /public/extensions/custom/*/*
 
 ##  Auth
 /public/extensions/custom/auth

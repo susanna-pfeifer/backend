@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block footer %}
+    {% if settings.small_business %}
+        Es erfolgt kein Ausweis der Umsatzsteuer aufgrund der Anwendung der Kleinunternehmerregelung gem. § 19 UStG.
+    {% endif %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <table style="margin-top:80px;">
+        <tr>
+            <td width="55%">
+                {{ invoice.address1 }}
+            </td>
+            <td class="right">
+                Rechnungsnr.
+            </td>
+            <td class="right">
+                <strong>{{ invoice.number }}</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ invoice.street }}
+            </td>
+            <td class="right">
+                Rechnugnsdatum
+            </td>
+            <td class="right">
+                {{ invoice.date | format_date }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ invoice.postcode }} {{ invoice.city }}
+            </td>
+            <td class="right">
+                Kundennr.
+            </td>
+            <td class="right">
+                {{ invoice.customer.number }}
+            </td>
+        </tr>
+    </table>
+
+    <h1 style="margin-top:100px;">Rechnung</h1>
+
+    <table class="positions">
+        <tr>
+            <th width="10%">Pos.</th>
+            <th width="70%">Beschreibung</th>
+            <th width="20%" class="right">Preis</th>
+        </tr>
+        {% set total = 0 %}
+        {% for position in invoice.positions %}
+            {% set total = total + position.total %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ position.description | nl2br }}</td>
+                <td class="right">
+                    <strong>{{ position.total | format_currency('EUR') }}</strong>
+                </td>
+            </tr>
+        {% endfor %}
+        <tr class="total">
+            <td class="right" colspan="2">
+                <strong>Gesamt</strong>
+            </td>
+            <td class="right">
+                <strong>{{ total | format_currency('EUR') }}</strong>
+            </td>
+        </tr>
+    </table>
+
+    <p>Geben Sie bitte als Verwendungszweck die Rechnungsnummer an.</p>
+    <p>Rechnungsbetrag fällig am {{ invoice.due | format_date }}</p>
+{% endblock %}
